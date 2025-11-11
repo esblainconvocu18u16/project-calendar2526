@@ -1,19 +1,20 @@
 {
-  "journee": 2,
-  "date": "19-21 novembre 2025",
+  "journee": 1,
+  "date": "12-14 novembre 2025",
   "equipes": {
     "u18a": {
       "matches": [
         {
-          "date": "19/11/2025",
-          "adversaire": "Saint-Étienne U18",
-          "lieu": "Extérieur",
+          "date": "12/11/2025",
+          "heure": "14h30",
+          "adversaire": "Lyon U18",
+          "lieu": "Domicile",
           "convocation": [
-            {"nom": "Dupont", "voiture": true},
+            {"nom": "Dupont"},
             {"nom": "Martin"},
             {"nom": "Durand"},
             {"nom": "Bernard"},
-            {"nom": "Petit", "maillot": true},
+            {"nom": "Petit"},
             {"nom": "Roux"},
             {"nom": "Morel"},
             {"nom": "Simon"},
@@ -23,20 +24,26 @@
             {"nom": "Fabre"},
             {"nom": "Lopez"},
             {"nom": "Blanc"}
-          ]
+          ],
+          "responsables": {
+            "maillots": ["Dupont"],
+            "voitures": ["Martin", "Bernard"],
+            "bar": ["Petit", "Roux"]
+          }
         }
       ]
     },
     "u18b": {
       "matches": [
         {
-          "date": "20/11/2025",
-          "adversaire": "Annecy U18",
-          "lieu": "Domicile",
+          "date": "13/11/2025",
+          "heure": "16h00",
+          "adversaire": "Grenoble U18",
+          "lieu": "Extérieur",
           "convocation": [
             {"nom": "Robert"},
-            {"nom": "Lambert", "maillot": true},
-            {"nom": "Fontaine", "voiture": true},
+            {"nom": "Lambert"},
+            {"nom": "Fontaine"},
             {"nom": "Perrin"},
             {"nom": "Bonnet"},
             {"nom": "Lemoine"},
@@ -48,23 +55,29 @@
             {"nom": "Gaillard"},
             {"nom": "Vincent"},
             {"nom": "Picard"}
-          ]
+          ],
+          "responsables": {
+            "maillots": ["Lambert"],
+            "voitures": ["Fontaine", "Renaud"],
+            "bar": ["Bonnet", "Lemoine"]
+          }
         }
       ]
     },
     "u16a": {
       "matches": [
         {
-          "date": "21/11/2025",
-          "adversaire": "Nice U16",
-          "lieu": "Extérieur",
+          "date": "14/11/2025",
+          "heure": "10h30",
+          "adversaire": "Clermont U16",
+          "lieu": "Domicile",
           "convocation": [
             {"nom": "Carpentier"},
             {"nom": "Renard"},
-            {"nom": "Chevalier", "maillot": true},
+            {"nom": "Chevalier"},
             {"nom": "Lucas"},
             {"nom": "Moulin"},
-            {"nom": "Perrot", "voiture": true},
+            {"nom": "Perrot"},
             {"nom": "Lamy"},
             {"nom": "Aubert"},
             {"nom": "Guichard"},
@@ -73,7 +86,12 @@
             {"nom": "Parent"},
             {"nom": "Giraud"},
             {"nom": "Boucher"}
-          ]
+          ],
+          "responsables": {
+            "maillots": ["Carpentier"],
+            "voitures": ["Renard", "Lucas"],
+            "bar": ["Moulin", "Perrot"]
+          }
         }
       ]
     }
