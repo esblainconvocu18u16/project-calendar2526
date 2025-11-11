@@ -6,127 +6,40 @@
   <title>Calendrier & Convocations — U18A / U18B / U16A</title>
   <style>
     :root {
-      --bg: #0e2014;
-      --card: #193d27;
+      --bg: #0d1b12;
+      --card: #163823;
       --text: #f8fafc;
       --muted: #a7bca8;
       --accent1: #16a34a;
       --accent2: #22c55e;
       --accent3: #86efac;
-      --shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Inter", Arial, sans-serif;
-      padding: 16px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-
-    label {
-      display: block;
-      text-align: center;
-      color: var(--muted);
-      margin-bottom: 0.3rem;
-    }
-
-    select {
-      display: block;
-      margin: 0 auto 1.5rem;
-      padding: 8px 12px;
-      background: var(--card);
-      color: var(--text);
-      border-radius: 8px;
-      border: 1px solid var(--accent2);
-      font-size: 1rem;
-    }
-
-    /* Tabs */
-    .tabs {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 1rem;
-    }
-    .tab {
-      padding: 8px 14px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.1);
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .tab.active {
-      background: var(--accent2);
-      color: #fff;
-    }
-
-    /* Sections */
-    .content { display: none; }
-    .content.active { display: block; }
-
-    /* Synthèse */
-    .synthese {
-      display: grid;
-      gap: 12px;
-    }
-    .match-card {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 14px;
-      box-shadow: var(--shadow);
-    }
-    .match-card h3 {
-      margin: 0 0 8px;
-      color: var(--accent3);
-    }
-    .match-info {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 6px 10px;
-      background: var(--accent2);
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    /* Convocations */
-    .convoc {
-      margin-top: 8px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 8px;
-    }
-    .convoc ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .convoc li {
-      display: flex;
-      justify-content: space-between;
-      padding: 4px 6px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .icon.maillot { color: var(--accent3); }
-    .icon.voiture { color: var(--accent2); }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:"Inter",sans-serif; padding:16px; }
+    h1 { text-align:center; margin-bottom:0.5rem; }
+    label { display:block; text-align:center; color:var(--muted); margin-bottom:0.3rem; }
+    select { display:block; margin:0 auto 1.5rem; padding:8px 12px; background:var(--card); color:var(--text); border-radius:8px; border:1px solid var(--accent2); }
+    .tabs { display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin-bottom:1rem; }
+    .tab { padding:8px 14px; border-radius:20px; background:rgba(255,255,255,0.1); cursor:pointer; }
+    .tab.active { background:var(--accent2); color:#fff; }
+    .content { display:none; }
+    .content.active { display:block; }
+    .match-card { background:var(--card); border-radius:12px; padding:14px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,0,0,0.3); }
+    .match-card h3 { margin:0 0 8px; color:var(--accent3); }
+    .match-info { font-size:0.9rem; color:var(--muted); margin-bottom:8px; }
+    .responsables { font-size:0.9rem; margin-bottom:6px; }
+    .responsables div { margin-top:3px; }
+    .btn { padding:6px 10px; background:var(--accent2); border:none; border-radius:8px; color:#fff; cursor:pointer; }
+    .convoc { margin-top:8px; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px; }
+    .convoc ul { list-style:none; padding:0; margin:0; }
+    .convoc li { display:flex; justify-content:space-between; padding:4px 6px; border-bottom:1px solid rgba(255,255,255,0.05); }
+    table { width:100%; border-collapse:collapse; font-size:0.95rem; }
+    th,td { padding:8px; text-align:center; }
+    th { background:rgba(255,255,255,0.1); color:var(--accent3); }
+    tr:hover { background:rgba(255,255,255,0.08); cursor:pointer; }
   </style>
 </head>
 <body>
   <h1>Calendrier & Convocations</h1>
-
   <label for="journeeSelect">Choisir une journée :</label>
   <select id="journeeSelect">
     <option value="journee1.json">Journée 1</option>
@@ -141,117 +54,14 @@
     <div class="tab" data-target="u16a">U16A</div>
   </div>
 
-  <!-- Synthèse -->
   <div id="synthese" class="content active">
-    <div class="synthese" id="synthese-list"></div>
+    <div id="synthese-list"></div>
   </div>
 
-  <!-- Détails équipes -->
   <div id="u18a" class="content">
-    <div class="equipe"><h2>U18A</h2><div id="table-u18a"></div><div id="convocation-u18a"></div></div>
+    <h2>U18A</h2><div id="table-u18a"></div><div id="convocation-u18a"></div>
   </div>
   <div id="u18b" class="content">
-    <div class="equipe"><h2>U18B</h2><div id="table-u18b"></div><div id="convocation-u18b"></div></div>
+    <h2>U18B</h2><div id="table-u18b"></div><div id="convocation-u18b"></div>
   </div>
-  <div id="u16a" class="content">
-    <div class="equipe"><h2>U16A</h2><div id="table-u16a"></div><div id="convocation-u16a"></div></div>
-  </div>
-
-  <script>
-    // Onglets
-    const tabs = document.querySelectorAll('.tab');
-    const contents = document.querySelectorAll('.content');
-    tabs.forEach(tab=>{
-      tab.addEventListener('click',()=>{
-        tabs.forEach(t=>t.classList.remove('active'));
-        contents.forEach(c=>c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.target).classList.add('active');
-      });
-    });
-
-    const select = document.getElementById('journeeSelect');
-    select.addEventListener('change',()=>chargerJournee(select.value));
-
-    async function chargerJournee(fichier){
-      const res=await fetch(fichier);
-      const data=await res.json();
-
-      // Synthèse
-      const synthDiv=document.getElementById('synthese-list');
-      synthDiv.innerHTML='';
-      Object.keys(data.equipes).forEach(equipe=>{
-        const eq=data.equipes[equipe];
-        eq.matches.forEach((match,i)=>{
-          const card=document.createElement('div');
-          card.className='match-card';
-          card.innerHTML=`
-            <h3>${equipe.toUpperCase()} vs ${match.adversaire}</h3>
-            <div class="match-info">
-              📅 ${match.date} • 📍 ${match.lieu}
-            </div>
-            <button class="btn" data-team="${equipe}" data-index="${i}">Voir convocation</button>
-            <div class="convoc" id="convoc-${equipe}-${i}" style="display:none"></div>
-          `;
-          synthDiv.appendChild(card);
-        });
-      });
-
-      // Gestion des boutons de convocation
-      document.querySelectorAll('.btn').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-          const team=btn.dataset.team;
-          const idx=btn.dataset.index;
-          const match=data.equipes[team].matches[idx];
-          const div=document.getElementById(`convoc-${team}-${idx}`);
-          if(div.style.display==='none'){
-            let html='<ul>';
-            match.convocation.forEach(j=>{
-              let icons='';
-              if(j.maillot) icons+=' <span class=\"icon maillot\">👕</span>';
-              if(j.voiture) icons+=' <span class=\"icon voiture\">🚗</span>';
-              html+=`<li>${j.nom}<span>${icons}</span></li>`;
-            });
-            html+='</ul>';
-            div.innerHTML=html;
-            div.style.display='block';
-            btn.textContent='Masquer convocation';
-          } else {
-            div.style.display='none';
-            btn.textContent='Voir convocation';
-          }
-        });
-      });
-
-      // Détails par équipe
-      Object.keys(data.equipes).forEach(equipe=>{
-        const tableDiv=document.getElementById(`table-${equipe}`);
-        const convDiv=document.getElementById(`convocation-${equipe}`);
-        let html='<table><tr><th>Date</th><th>Adversaire</th><th>Lieu</th></tr>';
-        data.equipes[equipe].matches.forEach((m,i)=>{
-          html+=`<tr data-team=\"${equipe}\" data-index=\"${i}\"><td>${m.date}</td><td>${m.adversaire}</td><td>${m.lieu}</td></tr>`;
-        });
-        html+='</table>';
-        tableDiv.innerHTML=html;
-        convDiv.innerHTML='';
-        document.querySelectorAll(`tr[data-team='${equipe}']`).forEach(row=>{
-          row.addEventListener('click',()=>{
-            const match=data.equipes[equipe].matches[row.dataset.index];
-            let html=`<div class='match-title'>Match vs ${match.adversaire} — ${match.date}</div><ul>`;
-            match.convocation.forEach(j=>{
-              let icons='';
-              if(j.maillot) icons+=' <span class=\"icon maillot\">👕</span>';
-              if(j.voiture) icons+=' <span class=\"icon voiture\">🚗</span>';
-              html+=`<li>${j.nom}<span>${icons}</span></li>`;
-            });
-            html+='</ul>';
-            convDiv.innerHTML=html;
-          });
-        });
-      });
-    }
-
-    chargerJournee(select.value);
-  </script>
-</body>
-</html>
+  <div id="u16a" class="
