@@ -154,30 +154,37 @@
     <div id="convocation-u16a"></div>
   </div>
 
-  <script>
-    const teamNames = { u18a: "U18A", u18b: "U18B", u16a: "U16A" };
+<script>
+  const teamNames = { u18a: "U18A", u18b: "U18B", u16a: "U16A" };
 
-    // Tabs
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.target).classList.add('active');
-      });
+  // Gestion des onglets
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.target).classList.add('active');
     });
+  });
 
-    const select = document.getElementById('journeeSelect');
-    select.addEventListener('change', () => chargerJournee(select.value));
+  const select = document.getElementById('journeeSelect');
+  select.addEventListener('change', () => chargerJournee(select.value));
 
-    async function chargerJournee(fichier) {
+  async function chargerJournee(fichier) {
+    try {
       const res = await fetch(fichier);
+      if (!res.ok) throw new Error(`Impossible de charger ${fichier}`);
       const data = await res.json();
 
-      // S Y N T H È S E
-      const synthDiv = document.getElementById('synthese-list');
-      synthDiv.innerHTML = '';
+      // Nettoyer les contenus avant rechargement
+      document.getElementById('synthese-list').innerHTML = '';
+      ['u18a', 'u18b', 'u16a'].forEach(eq => {
+        document.getElementById(`table-${eq}`).innerHTML = '';
+        document.getElementById(`convocation-${eq}`).innerHTML = '';
+      });
 
+      // === SYNTHÈSE ===
+      const synthDiv = document.getElementById('synthese-list');
       Object.keys(data.equipes).forEach(equipe => {
         const eq = data.equipes[equipe];
         eq.matches.forEach((match, i) => {
@@ -203,7 +210,7 @@
         });
       });
 
-      // Boutons convocation synthèse
+      // Gestion du bouton "Voir convocation"
       document.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const team = btn.dataset.team;
@@ -221,11 +228,12 @@
         });
       });
 
-      // Détails par équipe
+      // === PAR ÉQUIPE ===
       Object.keys(data.equipes).forEach(equipe => {
         const tableDiv = document.getElementById(`table-${equipe}`);
         const convDiv = document.getElementById(`convocation-${equipe}`);
-        tableDiv.innerHTML = `<table><tr><th>Date</th><th>Heure</th><th>Adversaire</th><th>Lieu</th></tr>` +
+        tableDiv.innerHTML =
+          `<table><tr><th>Date</th><th>Heure</th><th>Adversaire</th><th>Lieu</th></tr>` +
           data.equipes[equipe].matches.map((m,i)=>
             `<tr data-team="${equipe}" data-index="${i}">
               <td>${m.date}</td>
@@ -234,16 +242,15 @@
               <td>${m.lieu}</td>
             </tr>`
           ).join('') + '</table>';
-        convDiv.innerHTML = '';
 
-        document.querySelectorAll(`tr[data-team="${equipe}"]`).forEach(row => {
+        convDiv.innerHTML = '';
+        tableDiv.querySelectorAll('tr[data-team]').forEach(row => {
           row.addEventListener('click', () => {
             const m = data.equipes[equipe].matches[row.dataset.index];
             const r = m.responsables || {};
             const maillots = (r.maillots || []).join(', ') || '—';
             const voitures = (r.voitures || []).join(', ') || '—';
             const bar = (r.bar || []).join(', ') || '—';
-
             let html = `<div class="match-info"><strong>${teamNames[equipe]} vs ${m.adversaire}</strong> — ${m.date} ${m.heure} (${m.lieu})</div>`;
             html += `<div class="responsables">👕 ${maillots} • 🚗 ${voitures} • 🍻 ${bar}</div>`;
             html += `<ul>${m.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>`;
@@ -251,9 +258,15 @@
           });
         });
       });
-    }
 
-    chargerJournee(select.value);
-  </script>
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors du chargement du fichier JSON : " + err.message);
+    }
+  }
+
+  // Chargement initial
+  chargerJournee(select.value);
+</script>
 </body>
 </html>
