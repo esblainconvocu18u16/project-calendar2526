@@ -66,31 +66,31 @@
     },
     "u16a": {
       "matches": [
-        {
-          "date": "14/11/2025",
-          "heure": "16h00",
-          "adversaire": "Clermont U16",
-          "lieu": "Domicile",
+       {
+          "adversaire": "St Herblain OC",
+          "date": "Samedi 8 novembre 2025",
+          "heure": "14h15",
+          "lieu": "Rue du Zambeze, 44800 Saint-Herblain, France",
           "responsables": {
-            "maillots": ["Carpentier"],
-            "voitures": ["Renard", "Chevalier"],
-            "bar": ["Lucas", "Moulin"]
+            "maillots": ["Alan"],
+            "voitures": ["Martin", "Maxence", "Antonin.J", "Hugo.P"],
+            "bar": []
           },
           "convocation": [
-            {"nom": "Carpentier"},
-            {"nom": "Renard"},
-            {"nom": "Chevalier"},
-            {"nom": "Lucas"},
-            {"nom": "Moulin"},
-            {"nom": "Perrot"},
-            {"nom": "Lamy"},
-            {"nom": "Aubert"},
-            {"nom": "Guichard"},
-            {"nom": "Leclerc"},
-            {"nom": "Masson"},
-            {"nom": "Parent"},
-            {"nom": "Giraud"},
-            {"nom": "Boucher"}
+            { "nom": "Hugo T." },
+            { "nom": "Valentin B." },
+            { "nom": "Hugo G." },
+            { "nom": "Martin B." },
+            { "nom": "Manoé B." },
+            { "nom": "Solan L." },
+            { "nom": "Maxence L." },
+            { "nom": "Hugo P." },
+            { "nom": "Mike T." },
+            { "nom": "Jules C." },
+            { "nom": "Eythan P." },
+            { "nom": "Antonin J." },
+            { "nom": "Ilyès R." },
+            { "nom": "Alan" }
           ]
         }
       ]
