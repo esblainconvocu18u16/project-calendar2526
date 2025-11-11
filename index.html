@@ -156,8 +156,19 @@
 
 <script>
   const teamNames = { u18a: "U18A", u18b: "U18B", u16a: "U16A" };
+  const journees = ["journee1.json", "journee2.json", "journee3.json"]; // ajoute ici si tu crées journee4.json etc.
 
-  // Gestion des onglets
+  const select = document.getElementById('journeeSelect');
+
+  // === Initialisation du sélecteur ===
+  select.innerHTML = journees
+    .map((j, idx) => `<option value="${j}">Journée ${idx + 1}</option>`)
+    .join('');
+
+  // Choisir automatiquement la dernière journée
+  select.value = journees[journees.length - 1];
+
+  // === Gestion des onglets ===
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -167,16 +178,16 @@
     });
   });
 
-  const select = document.getElementById('journeeSelect');
+  // === Chargement dynamique ===
   select.addEventListener('change', () => chargerJournee(select.value));
 
   async function chargerJournee(fichier) {
     try {
-      const res = await fetch(fichier);
+      const res = await fetch(`${fichier}?v=${Date.now()}`, { cache: "no-store" });
       if (!res.ok) throw new Error(`Impossible de charger ${fichier}`);
       const data = await res.json();
 
-      // Nettoyer les contenus avant rechargement
+      // Nettoyer avant rechargement
       document.getElementById('synthese-list').innerHTML = '';
       ['u18a', 'u18b', 'u16a'].forEach(eq => {
         document.getElementById(`table-${eq}`).innerHTML = '';
@@ -210,7 +221,7 @@
         });
       });
 
-      // Gestion du bouton "Voir convocation"
+      // === Boutons Voir convocation ===
       document.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const team = btn.dataset.team;
@@ -265,7 +276,7 @@
     }
   }
 
-  // Chargement initial
+  // === Chargement initial : dernière journée ===
   chargerJournee(select.value);
 </script>
 </body>
