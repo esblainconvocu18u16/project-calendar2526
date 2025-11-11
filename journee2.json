@@ -1,19 +1,19 @@
 {
   "journee": 2,
-  "date": "12-14 novembre 2025",
+  "date": "19-21 novembre 2025",
   "equipes": {
     "u18a": {
       "matches": [
         {
-          "date": "12/11/2025",
-          "adversaire": "Lyon U18",
-          "lieu": "Domicile",
+          "date": "19/11/2025",
+          "adversaire": "Saint-Étienne U18",
+          "lieu": "Extérieur",
           "convocation": [
-            {"nom": "Dupont", "maillot": true},
-            {"nom": "Martin", "voiture": true},
+            {"nom": "Dupont", "voiture": true},
+            {"nom": "Martin"},
             {"nom": "Durand"},
             {"nom": "Bernard"},
-            {"nom": "Petit"},
+            {"nom": "Petit", "maillot": true},
             {"nom": "Roux"},
             {"nom": "Morel"},
             {"nom": "Simon"},
@@ -30,13 +30,13 @@
     "u18b": {
       "matches": [
         {
-          "date": "13/11/2025",
-          "adversaire": "Grenoble U18",
-          "lieu": "Extérieur",
+          "date": "20/11/2025",
+          "adversaire": "Annecy U18",
+          "lieu": "Domicile",
           "convocation": [
-            {"nom": "Robert", "maillot": true},
-            {"nom": "Lambert", "voiture": true},
-            {"nom": "Fontaine"},
+            {"nom": "Robert"},
+            {"nom": "Lambert", "maillot": true},
+            {"nom": "Fontaine", "voiture": true},
             {"nom": "Perrin"},
             {"nom": "Bonnet"},
             {"nom": "Lemoine"},
@@ -55,16 +55,16 @@
     "u16a": {
       "matches": [
         {
-          "date": "14/11/2025",
-          "adversaire": "Clermont U16",
-          "lieu": "Domicile",
+          "date": "21/11/2025",
+          "adversaire": "Nice U16",
+          "lieu": "Extérieur",
           "convocation": [
-            {"nom": "Carpentier", "maillot": true},
-            {"nom": "Renard", "voiture": true},
-            {"nom": "Chevalier"},
+            {"nom": "Carpentier"},
+            {"nom": "Renard"},
+            {"nom": "Chevalier", "maillot": true},
             {"nom": "Lucas"},
             {"nom": "Moulin"},
-            {"nom": "Perrot"},
+            {"nom": "Perrot", "voiture": true},
             {"nom": "Lamy"},
             {"nom": "Aubert"},
             {"nom": "Guichard"},
