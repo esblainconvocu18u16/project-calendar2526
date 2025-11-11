@@ -36,30 +36,30 @@
     "u18b": {
       "matches": [
         {
-          "date": "13/11/2025",
-          "heure": "15h30",
-          "adversaire": "Grenoble U18",
-          "lieu": "Extérieur",
+          "adversaire": "Heric FC U18",
+           "date": "08/11/2025",
+          "heure": "17h00",
+          "lieu": "Blain",
           "responsables": {
-            "maillots": ["Robert"],
-            "voitures": ["Lambert", "Fontaine"],
-            "bar": ["Perrin", "Bonnet"]
+            "maillots": ["Côme L."],
+            "voitures": [],
+            "bar": ["Lilian", "Aaron"]
           },
           "convocation": [
-            {"nom": "Robert"},
-            {"nom": "Lambert"},
-            {"nom": "Fontaine"},
-            {"nom": "Perrin"},
-            {"nom": "Bonnet"},
-            {"nom": "Lemoine"},
-            {"nom": "Boyer"},
-            {"nom": "Renaud"},
-            {"nom": "Gauthier"},
-            {"nom": "Collet"},
-            {"nom": "Descamps"},
-            {"nom": "Gaillard"},
-            {"nom": "Vincent"},
-            {"nom": "Picard"}
+            { "nom": "Aaron K." },
+            { "nom": "Erwan D." },
+            { "nom": "Clovis L." },
+            { "nom": "Paul B." },
+            { "nom": "Théo M." },
+            { "nom": "Joackim C." },
+            { "nom": "Mathis V." },
+            { "nom": "Lucas B." },
+            { "nom": "Thomas N." },
+            { "nom": "Hugo D." },
+            { "nom": "Sacha B." },
+            { "nom": "Tom G." },
+            { "nom": "Côme L." },
+            { "nom": "Lilian" }
           ]
         }
       ]
