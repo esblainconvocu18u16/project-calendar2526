@@ -1,0 +1,82 @@
+{
+    "journee": 3,
+    "date": "12-14 novembre 2025",
+    "equipes": {
+      "rouge": {
+        "matches": [
+          {
+            "date": "12/11/2025",
+            "adversaire": "Lions",
+            "lieu": "Domicile",
+            "convocation": [
+              {"nom": "Joueur 1", "maillot": true},
+              {"nom": "Joueur 2", "voiture": true},
+              {"nom": "Joueur 3"},
+              {"nom": "Joueur 4"},
+              {"nom": "Joueur 5"},
+              {"nom": "Joueur 6"},
+              {"nom": "Joueur 7"},
+              {"nom": "Joueur 8"},
+              {"nom": "Joueur 9"},
+              {"nom": "Joueur 10"},
+              {"nom": "Joueur 11"},
+              {"nom": "Joueur 12"},
+              {"nom": "Joueur 13"},
+              {"nom": "Joueur 14"}
+            ]
+          }
+        ]
+      },
+      "bleue": {
+        "matches": [
+          {
+            "date": "13/11/2025",
+            "adversaire": "Hawks",
+            "lieu": "Extérieur",
+            "convocation": [
+              {"nom": "Joueur 1"},
+              {"nom": "Joueur 2", "voiture": true},
+              {"nom": "Joueur 3"},
+              {"nom": "Joueur 4"},
+              {"nom": "Joueur 5", "maillot": true},
+              {"nom": "Joueur 6"},
+              {"nom": "Joueur 7"},
+              {"nom": "Joueur 8"},
+              {"nom": "Joueur 9"},
+              {"nom": "Joueur 10"},
+              {"nom": "Joueur 11"},
+              {"nom": "Joueur 12"},
+              {"nom": "Joueur 13"},
+              {"nom": "Joueur 14"}
+            ]
+          }
+        ]
+      },
+      "jaune": {
+        "matches": [
+          {
+            "date": "14/11/2025",
+            "adversaire": "Dragons",
+            "lieu": "Domicile",
+            "convocation": [
+              {"nom": "Joueur 1", "maillot": true},
+              {"nom": "Joueur 2", "voiture": true},
+              {"nom": "Joueur 3"},
+              {"nom": "Joueur 4"},
+              {"nom": "Joueur 5"},
+              {"nom": "Joueur 6"},
+              {"nom": "Joueur 7"},
+              {"nom": "Joueur 8"},
+              {"nom": "Joueur 9"},
+              {"nom": "Joueur 10"},
+              {"nom": "Joueur 11"},
+              {"nom": "Joueur 12"},
+              {"nom": "Joueur 13"},
+              {"nom": "Joueur 14"}
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

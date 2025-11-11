@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendrier & Convocations — Football</title>
+  <style>
+    body {
+      margin: 0; background: #0f1724; color: #f8fafc;
+      font-family: "Inter", Arial, sans-serif; padding: 16px;
+    }
+    h1 { text-align: center; }
+    select {
+      display: block; margin: 0 auto 1rem; padding: 8px 12px;
+      background: #1e293b; color: #fff; border-radius: 8px; border: none;
+    }
+    .tabs { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .tab { padding: 8px 14px; border-radius: 20px; background: rgba(255,255,255,0.1); cursor: pointer; }
+    .tab.active { background: #06b6d4; color: #fff; }
+    .content { display: none; }
+    .content.active { display: block; }
+    .equipe { background: #1e293b; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 8px; text-align: center; }
+    tr:hover { background: rgba(255,255,255,0.08); cursor: pointer; }
+    .joueurs ul { list-style: none; padding: 0; }
+    .joueurs li { display: flex; justify-content: space-between; padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .icon.maillot { color: #f59e0b; }
+    .icon.voiture { color: #06b6d4; }
+    .match-title { text-align: center; color: #94a3b8; margin-top: 1rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Calendrier & Convocations</h1>
+
+  <!-- Sélecteur de journée -->
+  <label for="journeeSelect" style="display:block;text-align:center;">Choisir une journée :</label>
+  <select id="journeeSelect">
+    <option value="journee1.json">Journée 1</option>
+    <option value="journee2.json">Journée 2</option>
+    <option value="journee3.json">Journée 3</option>
+  </select>
+
+  <!-- Onglets équipes -->
+  <div class="tabs">
+    <div class="tab active" data-target="rouge">Équipe Rouge</div>
+    <div class="tab" data-target="bleue">Équipe Bleue</div>
+    <div class="tab" data-target="jaune">Équipe Jaune</div>
+  </div>
+
+  <!-- Contenus dynamiques -->
+  <div id="rouge" class="content active"><div class="equipe red"><h2>Équipe Rouge</h2><div id="table-rouge"></div><div class="joueurs" id="convocation-rouge"></div></div></div>
+  <div id="bleue" class="content"><div class="equipe blue"><h2>Équipe Bleue</h2><div id="table-bleue"></div><div class="joueurs" id="convocation-bleue"></div></div></div>
+  <div id="jaune" class="content"><div class="equipe yellow"><h2>Équipe Jaune</h2><div id="table-jaune"></div><div class="joueurs" id="convocation-jaune"></div></div></div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.target).classList.add('active');
+      });
+    });
+
+    const select = document.getElementById('journeeSelect');
+    select.addEventListener('change', () => chargerJournee(select.value));
+
+    async function chargerJournee(fichier) {
+      const res = await fetch(fichier);
+      const data = await res.json();
+
+      Object.keys(data.equipes).forEach(equipe => {
+        const tableDiv = document.getElementById(`table-${equipe}`);
+        const convDiv = document.getElementById(`convocation-${equipe}`);
+
+        let html = '<table><tr><th>Date</th><th>Adversaire</th><th>Lieu</th></tr>';
+        data.equipes[equipe].matches.forEach((match, i) => {
+          html += `<tr data-team="${equipe}" data-index="${i}">
+            <td>${match.date}</td>
+            <td>${match.adversaire}</td>
+            <td>${match.lieu}</td>
+          </tr>`;
+        });
+        html += '</table>';
+        tableDiv.innerHTML = html;
+        convDiv.innerHTML = '';
+
+        document.querySelectorAll(`tr[data-team="${equipe}"]`).forEach(row => {
+          row.addEventListener('click', () => {
+            const idx = row.dataset.index;
+            const match = data.equipes[equipe].matches[idx];
+            let html = `<div class="match-title">Match vs ${match.adversaire} — ${match.date}</div><ul>`;
+            match.convocation.forEach(j => {
+              let icons = '';
+              if (j.maillot) icons += '<span class="icon maillot">👕</span>';
+              if (j.voiture) icons += '<span class="icon voiture">🚗</span>';
+              html += `<li>${j.nom}<span>${icons}</span></li>`;
+            });
+            html += '</ul>';
+            convDiv.innerHTML = html;
+          });
+        });
+      });
+    }
+
+    // Charger la première journée au démarrage
+    chargerJournee(select.value);
+  </script>
+</body>
+</html>
