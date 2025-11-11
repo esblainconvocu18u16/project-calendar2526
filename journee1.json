@@ -6,11 +6,12 @@
       "matches": [
         {
           "date": "12/11/2025",
+          "heure": "14h30",
           "adversaire": "Lyon U18",
           "lieu": "Domicile",
           "convocation": [
-            {"nom": "Dupont", "maillot": true},
-            {"nom": "Martin", "voiture": true},
+            {"nom": "Dupont"},
+            {"nom": "Martin"},
             {"nom": "Durand"},
             {"nom": "Bernard"},
             {"nom": "Petit"},
@@ -23,7 +24,12 @@
             {"nom": "Fabre"},
             {"nom": "Lopez"},
             {"nom": "Blanc"}
-          ]
+          ],
+          "responsables": {
+            "maillots": ["Dupont"],
+            "voitures": ["Martin", "Bernard"],
+            "bar": ["Petit", "Roux"]
+          }
         }
       ]
     },
@@ -31,11 +37,12 @@
       "matches": [
         {
           "date": "13/11/2025",
+          "heure": "16h00",
           "adversaire": "Grenoble U18",
           "lieu": "Extérieur",
           "convocation": [
-            {"nom": "Robert", "maillot": true},
-            {"nom": "Lambert", "voiture": true},
+            {"nom": "Robert"},
+            {"nom": "Lambert"},
             {"nom": "Fontaine"},
             {"nom": "Perrin"},
             {"nom": "Bonnet"},
@@ -48,7 +55,12 @@
             {"nom": "Gaillard"},
             {"nom": "Vincent"},
             {"nom": "Picard"}
-          ]
+          ],
+          "responsables": {
+            "maillots": ["Lambert"],
+            "voitures": ["Fontaine", "Renaud"],
+            "bar": ["Bonnet", "Lemoine"]
+          }
         }
       ]
     },
@@ -56,11 +68,12 @@
       "matches": [
         {
           "date": "14/11/2025",
+          "heure": "10h30",
           "adversaire": "Clermont U16",
           "lieu": "Domicile",
           "convocation": [
-            {"nom": "Carpentier", "maillot": true},
-            {"nom": "Renard", "voiture": true},
+            {"nom": "Carpentier"},
+            {"nom": "Renard"},
             {"nom": "Chevalier"},
             {"nom": "Lucas"},
             {"nom": "Moulin"},
@@ -73,7 +86,12 @@
             {"nom": "Parent"},
             {"nom": "Giraud"},
             {"nom": "Boucher"}
-          ]
+          ],
+          "responsables": {
+            "maillots": ["Carpentier"],
+            "voitures": ["Renard", "Lucas"],
+            "bar": ["Moulin", "Perrot"]
+          }
         }
       ]
     }
