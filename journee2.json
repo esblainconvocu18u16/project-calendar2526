@@ -1,11 +1,11 @@
 {
   "journee": 2,
-  "date": "12-14 novembre 2025",
+  "date": "12-14 decembre 2025",
   "equipes": {
     "u18a": {
       "matches": [
         {
-          "date": "12/11/2025",
+          "date": "12/12/2025",
           "heure": "14h30",
           "adversaire": "Lyon U18",
           "lieu": "Domicile",
@@ -36,7 +36,7 @@
     "u18b": {
       "matches": [
         {
-          "date": "13/11/2025",
+          "date": "13/12/2025",
           "heure": "16h00",
           "adversaire": "Grenoble U18",
           "lieu": "Extérieur",
@@ -67,7 +67,7 @@
     "u16a": {
       "matches": [
         {
-          "date": "14/11/2025",
+          "date": "14/12/2025",
           "heure": "10h30",
           "adversaire": "Clermont U16",
           "lieu": "Domicile",
