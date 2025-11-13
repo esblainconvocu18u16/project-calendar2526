@@ -156,6 +156,70 @@
     height: 76px;
   }
 }
+/* 🌐 Modal responsive pour FFF */
+.modal-fff {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.modal-content-fff {
+  position: relative;
+  width: 95%;
+  height: 90vh;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content-fff iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+}
+
+.close-fff {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+.close-fff:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* 📱 Mobile : pleine largeur et hauteur */
+@media (max-width: 600px) {
+  .modal-content-fff {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+  .close-fff {
+    font-size: 1.8rem;
+    top: 8px;
+    right: 8px;
+  }
+}
+
+    
 
   </style>
 </head>
@@ -353,5 +417,45 @@
   // === Chargement initial : dernière journée ===
   chargerJournee(select.value);
 </script>
+
+<!-- 🔰 Modal U18A avec intégration FFF -->
+<div id="modal-u18a" class="modal-fff">
+  <div class="modal-content-fff">
+    <button id="close-u18a" class="close-fff">✕</button>
+    <iframe
+      id="iframe-u18a"
+      src="https://epreuves.fff.fr/competition/club/502178-ent-s-de-blain/equipe/2025_1312_U19_2/equipe"
+      loading="lazy"
+      allowfullscreen
+    ></iframe>
+  </div>
+</div>
+
+<script>
+  // Ouvre le contenu FFF lorsqu'on clique sur l'onglet U18A
+  const tabU18A = document.querySelector('.tab[data-target="u18a"]');
+  const modalU18A = document.getElementById('modal-u18a');
+  const closeU18A = document.getElementById('close-u18a');
+
+  tabU18A.addEventListener('click', () => {
+    modalU18A.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // empêche le scroll arrière-plan
+  });
+
+  closeU18A.addEventListener('click', () => {
+    modalU18A.style.display = 'none';
+    document.body.style.overflow = ''; // rétablit le scroll
+  });
+
+  // Fermer si on clique en dehors du contenu
+  modalU18A.addEventListener('click', (e) => {
+    if (e.target === modalU18A) {
+      modalU18A.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+
+  
 </body>
 </html>
