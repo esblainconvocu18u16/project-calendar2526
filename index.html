@@ -144,15 +144,19 @@
 
     /* === SPONSORS (fluide, logos doublés) === */
     .sponsor-carousel {
+      position: sticky; /* reste visible pendant le scroll */
+      top: 0; /* collé en haut de la page */
+      z-index: 50; /* au-dessus du reste du contenu */
       width: 100%;
       overflow: hidden;
       background: var(--card);
       padding: 20px 0;
       margin-bottom: 16px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      position: relative;
+      border-radius: 0; /* pleine largeur pour un effet bandeau */
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      border-bottom: 2px solid var(--accent2);
     }
+
     .sponsor-track {
       display: flex;
       width: max-content;
