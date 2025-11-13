@@ -1,0 +1,100 @@
+{
+  "journee": 1,
+  "date": "08-09 novembre 2025",
+  "equipes": {
+    "u18a": {
+      "matches": [
+        {
+          "date": "08/11/2025",
+          "heure": "9h30",
+          "adversaire": "GJ Goulaine U18",
+          "lieu": "Exterieur",
+          "responsables": {
+            "maillots": ["Baptiste"],
+            "voitures": ["Théo", "Germain","Enri","Lucas" ],
+            "bar": []
+          },
+          "convocation": [
+            { "nom": "Valentin" },
+            { "nom": "Clement" },
+            { "nom": "Germain" },
+            { "nom": "Flavien" },
+            { "nom": "Enri" },
+            { "nom": "Théo" },
+            { "nom": "Baptiste" },
+            { "nom": "Lucas" },
+            { "nom": "Alexis" },
+            { "nom": "Roman" },
+            { "nom": "Kyllian" },
+            { "nom": "Elouen" },
+            { "nom": "Eliott" },
+            { "nom": "Antonin L." }
+          ]
+        }
+      ]
+    },
+    "u18b": {
+      "matches": [
+        {
+          "adversaire": "Heric FC U18",
+           "date": "08/11/2025",
+          "heure": "17h00",
+          "lieu": "Blain",
+          "responsables": {
+            "maillots": ["Côme L."],
+            "voitures": [],
+            "bar": ["Lilian", "Aaron"]
+          },
+          "convocation": [
+            { "nom": "Aaron K." },
+            { "nom": "Erwan D." },
+            { "nom": "Clovis L." },
+            { "nom": "Paul B." },
+            { "nom": "Théo M." },
+            { "nom": "Joackim C." },
+            { "nom": "Mathis V." },
+            { "nom": "Lucas B." },
+            { "nom": "Thomas N." },
+            { "nom": "Hugo D." },
+            { "nom": "Sacha B." },
+            { "nom": "Tom G." },
+            { "nom": "Côme L." },
+            { "nom": "Lilian" }
+          ]
+        }
+      ]
+    },
+    "u16a": {
+      "matches": [
+       {
+          "adversaire": "NANTES SPORTING CLUB ",
+          "date": "Samedi 15 novembre 2025",
+          "rdv": "14h30",
+          "heure": "16h00",
+          "lieu": "STADE DE LA ROCHE- QUARTIER MALAKOFF- Rue la révolution des oeillets- 44000 NANTES",
+          "responsables": {
+            "maillots": ["Alan"],
+            "voitures": ["Martin", "Maxence", "Antonin.J", "Hugo.P"],
+            "bar": []
+          },
+          "convocation": [
+            { "nom": "Hugo T." },
+            { "nom": "Valentin B." },
+            { "nom": "Hugo G." },
+            { "nom": "Martin B." },
+            { "nom": "Manoé B." },
+            { "nom": "Solan L." },
+            { "nom": "Maxence L." },
+            { "nom": "Hugo P." },
+            { "nom": "Mike T." },
+            { "nom": "Jules C." },
+            { "nom": "Eythan P." },
+            { "nom": "Antonin J." },
+            { "nom": "Ilyès R." },
+            { "nom": "Alan" }
+          ]
+        }
+      ]
+    }
+  }
+}
