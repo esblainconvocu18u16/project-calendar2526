@@ -417,45 +417,5 @@
   // === Chargement initial : dernière journée ===
   chargerJournee(select.value);
 </script>
-
-<!-- 🔰 Modal U18A avec intégration FFF -->
-<div id="modal-u18a" class="modal-fff">
-  <div class="modal-content-fff">
-    <button id="close-u18a" class="close-fff">✕</button>
-    <iframe
-      id="iframe-u18a"
-      src="https://epreuves.fff.fr/competition/club/502178-ent-s-de-blain/equipe/2025_1312_U19_2/equipe"
-      loading="lazy"
-      allowfullscreen
-    ></iframe>
-  </div>
-</div>
-
-<script>
-  // Ouvre le contenu FFF lorsqu'on clique sur l'onglet U18A
-  const tabU18A = document.querySelector('.tab[data-target="u18a"]');
-  const modalU18A = document.getElementById('modal-u18a');
-  const closeU18A = document.getElementById('close-u18a');
-
-  tabU18A.addEventListener('click', () => {
-    modalU18A.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // empêche le scroll arrière-plan
-  });
-
-  closeU18A.addEventListener('click', () => {
-    modalU18A.style.display = 'none';
-    document.body.style.overflow = ''; // rétablit le scroll
-  });
-
-  // Fermer si on clique en dehors du contenu
-  modalU18A.addEventListener('click', (e) => {
-    if (e.target === modalU18A) {
-      modalU18A.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-  });
-</script>
-
-  
 </body>
 </html>
