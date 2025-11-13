@@ -12,7 +12,7 @@
           "lieu": "STADE MUNICIPAL 1 - 11 RUE DE LA TANNERIE - 44430 LE LOROUX BOTTEREAU",
           "responsables": {
             "maillots": ["Kylian"],
-            "voitures": ["Elouen", "Antonin","Clément","Lucas" ],
+            "voitures": ["Elouen", "Antonin","Clément","Lucas-D" ],
             "bar": []
           },
           "convocation": [
@@ -26,7 +26,7 @@
             { "nom": "Lucas" },
             { "nom": "Alexis - Suspendu" },
             { "nom": "Roman" },
-            { "nom": "Kyllian" },
+            { "nom": "Kylian" },
             { "nom": "Elouen" },
             { "nom": "Eliott" },
             { "nom": "Antonin L." }
