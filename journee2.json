@@ -54,7 +54,7 @@
             { "nom": "Paul B." },
             { "nom": "Théo M." },
             { "nom": "Alan" },
-            { "nom": "Ethan" },
+            { "nom": "Eythan" },
             { "nom": "Lucas B." },
             { "nom": "Thomas N." },
             { "nom": "Hugo D." },
@@ -90,10 +90,8 @@
             { "nom": "Hugo P." },
             { "nom": "Mike T." },
             { "nom": "Jules C." },
-            { "nom": "Eythan P." },
             { "nom": "Antonin J." },
-            { "nom": "Ilyès R." },
-            { "nom": "Alan" }
+            { "nom": "Ilyès R." }
           ]
         }
       ]
