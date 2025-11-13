@@ -43,9 +43,9 @@
           "lien": "https://epreuves.fff.fr/competition/match/55106852-ent-s-de-blain-union-brivet-campbon-chapelle-launay/match",
           "lieu": "Blain",
           "responsables": {
-            "maillots": ["Côme L."],
+            "maillots": ["Aaron"],
             "voitures": [],
-            "bar": ["Lilian", "Aaron"]
+            "bar": ["Lucas-B", ""]
           },
           "convocation": [
             { "nom": "Aaron K." },
@@ -76,8 +76,8 @@
           "lieu": "STADE DE LA ROCHE- QUARTIER MALAKOFF- Rue la révolution des oeillets- 44000 NANTES",
           "lien": "https://epreuves.fff.fr/competition/match/55102384-sporting-club-de-nantes-ent-s-de-blain/match",
           "responsables": {
-            "maillots": ["Alan"],
-            "voitures": ["Martin", "Maxence", "Antonin.J", "Hugo.P"],
+            "maillots": ["Jules"],
+            "voitures": ["Manoé", "Solan", "Valentin", "Hugo.P"],
             "bar": []
           },
           "convocation": [
