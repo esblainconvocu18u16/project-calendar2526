@@ -338,7 +338,10 @@
     card.className = "match-card";
     card.innerHTML = `
       <h3>${teamNames[equipe]} vs ${match.adversaire}</h3>
-      <div class="match-info">📅 ${match.date} • 🕒 ${match.heure} • 📍 ${match.lieu}</div>
+      <div class="match-info">
+        📅 ${match.date} • 🕒 ${match.heure} • 📍 ${match.lieu}
+        ${match.lien ? `<br>🔗 <a href="${match.lien}" target="_blank" style="color: var(--accent3);">Détails du match</a>` : ""}
+      </div>
       ${match.rendezvous ? `<div class="match-info">⏰ RDV : ${match.rendezvous}</div>` : ""}
       <div class="responsables">
         <div>👕 Maillots : ${maillots}</div>
