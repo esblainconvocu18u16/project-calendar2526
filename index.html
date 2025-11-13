@@ -250,103 +250,124 @@
   <div id="u18b" class="content"><h2>U18B</h2><div id="table-u18b"></div><div id="convocation-u18b"></div></div>
   <div id="u16a" class="content"><h2>U16A</h2><div id="table-u16a"></div><div id="convocation-u16a"></div></div>
 
-  <script>
-    const teamNames = { u18a: "U18A", u18b: "U18B", u16a: "U16A" };
-    const journees = ["journee1.json"];
-    const select = document.getElementById('journeeSelect');
-    select.innerHTML = journees.map((j, idx) => `<option value="${j}">Journée ${idx + 1}</option>`).join('');
-    select.value = journees[journees.length - 1];
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.target).classList.add('active');
-      });
+<script>
+  const teamNames = { u18a: "U18A", u18b: "U18B", u16a: "U16A" };
+  const journees = ["journee1.json"];
+  const select = document.getElementById('journeeSelect');
+
+  // Remplissage du sélecteur
+  select.innerHTML = journees.map((j, idx) => `<option value="${j}">Journée ${idx + 1}</option>`).join('');
+  select.value = journees[journees.length - 1];
+
+  // Gestion des onglets
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.target).classList.add('active');
     });
-    select.addEventListener('change', () => chargerJournee(select.value));
-    async function chargerJournee(fichier) {
-      try {
-        const res = await fetch(`${fichier}?v=${Date.now()}`, { cache: "no-store" });
-        if (!res.ok) throw new Error(`Impossible de charger ${fichier}`);
-        const data = await res.json();
-        document.getElementById('synthese-list').innerHTML = '';
-        ['u18a', 'u18b', 'u16a'].forEach(eq => {
-          document.getElementById(`table-${eq}`).innerHTML = '';
-          document.getElementById(`convocation-${eq}`).innerHTML = '';
-        });
-        const synthDiv = document.getElementById('synthese-list');
-        Object.keys(data.equipes).forEach(equipe => {
-          const eq = data.equipes[equipe];
-          eq.matches.forEach((match, i) => {
-            const resp = match.responsables || {};
-            const maillots = (resp.maillots || []).join(', ') || '—';
-            const voitures = (resp.voitures || []).join(', ') || '—';
-            const bar = (resp.bar || []).join(', ') || '—';
-            const card = document.createElement('div');
-            card.className = 'match-card';
-            card.innerHTML = `
-              <h3>${teamNames[equipe]} vs ${match.adversaire}</h3>
-              <div class="match-info">📅 ${match.date} • 🕒 ${match.heure} • 📍 ${match.lieu}</div>
-              <div class="responsables">
-                <div>👕 Maillots : ${maillots}</div>
-                <div>🚗 Voitures : ${voitures}</div>
-                <div>🍻 Bar : ${bar}</div>
-              </div>
-              <button class="btn" data-team="${equipe}" data-index="${i}">Voir convocation</button>
-              <div class="convoc" id="convoc-${equipe}-${i}" style="display:none"></div>`;
-            synthDiv.appendChild(card);
+  });
+
+  select.addEventListener('change', () => chargerJournee(select.value));
+
+  async function chargerJournee(fichier) {
+    try {
+      const res = await fetch(`${fichier}?v=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Impossible de charger ${fichier}`);
+      const data = await res.json();
+
+      // Réinitialisation
+      document.getElementById('synthese-list').innerHTML = '';
+      ['u18a', 'u18b', 'u16a'].forEach(eq => {
+        document.getElementById(`table-${eq}`).innerHTML = '';
+        document.getElementById(`convocation-${eq}`).innerHTML = '';
+      });
+
+      // === SYNTHÈSE ===
+      const synthDiv = document.getElementById('synthese-list');
+      Object.keys(data.equipes).forEach(equipe => {
+        const eq = data.equipes[equipe];
+        eq.matches.forEach((match, i) => synthDiv.appendChild(creerCarteMatch(equipe, match, i, data)));
+      });
+
+      // === TABLEAUX ÉQUIPES ===
+      Object.keys(data.equipes).forEach(equipe => {
+        const tableDiv = document.getElementById(`table-${equipe}`);
+        const convDiv = document.getElementById(`convocation-${equipe}`);
+
+        // Tableau
+        tableDiv.innerHTML =
+          `<table><tr><th>Date</th><th>Heure</th><th>Adversaire</th><th>Lieu</th></tr>` +
+          data.equipes[equipe].matches.map((m,i)=>
+            `<tr data-team="${equipe}" data-index="${i}">
+              <td>${m.date}</td>
+              <td>${m.heure}</td>
+              <td>${m.adversaire}</td>
+              <td>${m.lieu}</td>
+            </tr>`
+          ).join('') + '</table>';
+
+        // Lorsqu’on clique sur un match → même contenu que synthèse
+        tableDiv.querySelectorAll('tr[data-team]').forEach(row => {
+          row.addEventListener('click', () => {
+            const match = data.equipes[equipe].matches[row.dataset.index];
+            convDiv.innerHTML = '';
+            convDiv.appendChild(creerCarteMatch(equipe, match, row.dataset.index, data, true));
           });
         });
-        document.querySelectorAll('.btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const team = btn.dataset.team;
-            const idx = btn.dataset.index;
-            const match = data.equipes[team].matches[idx];
-            const div = document.getElementById(`convoc-${team}-${idx}`);
-            if (div.style.display === 'none') {
-              div.innerHTML = `<ul>${match.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>`;
-              div.style.display = 'block';
-              btn.textContent = 'Masquer convocation';
-            } else {
-              div.style.display = 'none';
-              btn.textContent = 'Voir convocation';
-            }
-          });
-        });
-        Object.keys(data.equipes).forEach(equipe => {
-          const tableDiv = document.getElementById(`table-${equipe}`);
-          const convDiv = document.getElementById(`convocation-${equipe}`);
-          tableDiv.innerHTML =
-            `<table><tr><th>Date</th><th>Heure</th><th>Adversaire</th><th>Lieu</th></tr>` +
-            data.equipes[equipe].matches.map((m,i)=>
-              `<tr data-team="${equipe}" data-index="${i}">
-                <td>${m.date}</td>
-                <td>${m.heure}</td>
-                <td>${m.adversaire}</td>
-                <td>${m.lieu}</td>
-              </tr>`).join('') + '</table>';
-          convDiv.innerHTML = '';
-          tableDiv.querySelectorAll('tr[data-team]').forEach(row => {
-            row.addEventListener('click', () => {
-              const m = data.equipes[equipe].matches[row.dataset.index];
-              const r = m.responsables || {};
-              const maillots = (r.maillots || []).join(', ') || '—';
-              const voitures = (r.voitures || []).join(', ') || '—';
-              const bar = (r.bar || []).join(', ') || '—';
-              let html = `<div class="match-info"><strong>${teamNames[equipe]} vs ${m.adversaire}</strong> — ${m.date} ${m.heure} (${m.lieu})</div>`;
-              html += `<div class="responsables">👕 ${maillots} • 🚗 ${voitures} • 🍻 ${bar}</div>`;
-              html += `<ul>${m.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>`;
-              convDiv.innerHTML = html;
-            });
-          });
-        });
-      } catch (err) {
-        console.error(err);
-        alert("Erreur lors du chargement du fichier JSON : " + err.message);
-      }
+      });
+
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors du chargement du fichier JSON : " + err.message);
     }
-    chargerJournee(select.value);
-  </script>
+  }
+
+  // === Fonction utilitaire : création d'une carte de match ===
+  function creerCarteMatch(equipe, match, index, data, expanded=false) {
+    const resp = match.responsables || {};
+    const maillots = (resp.maillots || []).join(', ') || '—';
+    const voitures = (resp.voitures || []).join(', ') || '—';
+    const bar = (resp.bar || []).join(', ') || '—';
+
+    const card = document.createElement('div');
+    card.className = 'match-card';
+    card.innerHTML = `
+      <h3>${teamNames[equipe]} vs ${match.adversaire}</h3>
+      <div class="match-info">📅 ${match.date} • 🕒 ${match.heure} • 📍 ${match.lieu}</div>
+      ${match.rendezvous ? `<div class="match-info">⏰ RDV : ${match.rendezvous}</div>` : ""}
+      <div class="responsables">
+        <div>👕 Maillots : ${maillots}</div>
+        <div>🚗 Voitures : ${voitures}</div>
+        <div>🍻 Bar : ${bar}</div>
+      </div>
+      <button class="btn" data-team="${equipe}" data-index="${index}">
+        ${expanded ? 'Masquer convocation' : 'Voir convocation'}
+      </button>
+      <div class="convoc" id="convoc-${equipe}-${index}" style="display:${expanded ? 'block' : 'none'}">
+        ${expanded ? `<ul>${match.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>` : ''}
+      </div>
+    `;
+
+    const btn = card.querySelector('.btn');
+    const div = card.querySelector('.convoc');
+    btn.addEventListener('click', () => {
+      if (div.style.display === 'none') {
+        div.innerHTML = `<ul>${match.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>`;
+        div.style.display = 'block';
+        btn.textContent = 'Masquer convocation';
+      } else {
+        div.style.display = 'none';
+        btn.textContent = 'Voir convocation';
+      }
+    });
+
+    return card;
+  }
+
+  // Charger la dernière journée par défaut
+  chargerJournee(select.value);
+</script>
 </body>
 </html>
