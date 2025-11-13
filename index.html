@@ -21,10 +21,65 @@
       font-family: "Inter", sans-serif;
       padding: 16px;
     }
-    h1 {
+
+    /* === 🟢 SECTION LOGO CLUB === */
+    .club-header {
       text-align: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      background: linear-gradient(135deg, rgba(22,197,94,0.15), rgba(255,255,255,0.05));
+      border-radius: 18px;
+      padding: 20px 10px 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      overflow: hidden;
     }
+
+    .club-header::before {
+      content: "";
+      position: absolute;
+      top: -60%;
+      left: -60%;
+      width: 220%;
+      height: 220%;
+      background: radial-gradient(circle at center, rgba(34,197,94,0.1), transparent 70%);
+      animation: pulse 8s infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); opacity: 0.7; }
+      to { transform: scale(1.2); opacity: 0.3; }
+    }
+
+    .club-logo {
+      position: relative;
+      z-index: 1;
+      width: 130px;
+      height: auto;
+      border-radius: 50%;
+      border: 3px solid var(--accent2);
+      background: #fff;
+      padding: 8px;
+      transition: transform 0.6s ease, box-shadow 0.4s ease;
+    }
+
+    .club-logo:hover {
+      transform: rotate(-3deg) scale(1.1);
+      box-shadow: 0 0 25px rgba(34,197,94,0.6);
+    }
+
+    .club-header h1 {
+      margin-top: 12px;
+      font-size: 1.5rem;
+      color: var(--accent3);
+      position: relative;
+      z-index: 1;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
     label {
       display: block;
       text-align: center;
@@ -41,6 +96,7 @@
       border: 1px solid var(--accent2);
       font-size: 1rem;
     }
+
     .tabs {
       display: flex;
       justify-content: center;
@@ -60,6 +116,7 @@
     }
     .content { display: none; }
     .content.active { display: block; }
+
     .match-card {
       background: var(--card);
       border-radius: 12px;
@@ -69,14 +126,8 @@
     }
     .match-card h3 { margin: 0 0 8px; color: var(--accent3); }
     .match-info { font-size: 0.9rem; color: var(--muted); margin-bottom: 8px; }
-    .responsables {
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-    .responsables div {
-      margin-top: 3px;
-    }
+    .responsables { font-size: 0.9rem; margin-bottom: 8px; color: var(--text); }
+    .responsables div { margin-top: 3px; }
     .btn {
       padding: 6px 10px;
       background: var(--accent2);
@@ -102,97 +153,86 @@
       border-collapse: collapse;
       font-size: 0.95rem;
     }
-    th, td {
-      padding: 8px;
-      text-align: center;
+    th, td { padding: 8px; text-align: center; }
+    th { background: rgba(255,255,255,0.1); color: var(--accent3); }
+    tr:hover { background: rgba(255,255,255,0.08); cursor: pointer; }
+
+    /* 🎠 Bandeau sponsors */
+    .sponsor-carousel {
+      width: 100%;
+      overflow: hidden;
+      background: var(--card);
+      padding: 8px 0;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-    th {
-      background: rgba(255,255,255,0.1);
-      color: var(--accent3);
+    .sponsor-track {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      animation: scroll 40s linear infinite;
+      align-items: center;
     }
-    tr:hover {
-      background: rgba(255,255,255,0.08);
-      cursor: pointer;
+    .sponsor-track img {
+      height: 90px;
+      width: auto;
+      flex-shrink: 0;
+      object-fit: contain;
+      filter: brightness(0.95);
+      transition: transform 0.3s;
     }
-/* 🎠 Carousel sponsors - version fluide sans accélération */
-.sponsor-carousel {
-  width: 100%;
-  overflow: hidden;
-  background: var(--card);
-  padding: 6px 0;
-  margin-bottom: 12px;
-}
+    .sponsor-track img:hover { transform: scale(1.1); }
 
-.sponsor-track {
-  display: flex;
-  gap: 20px;
-  width: max-content;
-  animation: scroll 40s linear infinite;
-  align-items: center;
-}
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
 
-.sponsor-track img {
-  height: 100px;
-  width: auto;
-  flex-shrink: 0;
-  object-fit: contain;
-  filter: brightness(0.95);
-  transition: transform 0.3s;
-}
-
-.sponsor-track img:hover {
-  transform: scale(1.1);
-}
-
-/* Animation fluide et continue */
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* 📱 Version mobile */
-@media (max-width: 600px) {
-  .sponsor-track img {
-    height: 76px;
-  }
-}
-
+    @media (max-width: 600px) {
+      .sponsor-track img { height: 65px; }
+      .club-logo { width: 90px; }
+      .club-header h1 { font-size: 1.1rem; }
+    }
   </style>
 </head>
 <body>
-    <!-- 🔰 Bande défilante des sponsors -->
-<div class="sponsor-carousel">
-  <div class="sponsor-track">
-    <!-- Première série -->
-    <img src="https://esblain.fr/images/2022/11/25/century21-300.png" alt="Century 21">
-    <img src="https://esblain.fr/images/2022/11/25/allainz300.png" alt="Allianz">
-    <img src="https://esblain.fr/images/2022/11/25/espaceemeraude300.png" alt="Espace Émeraude">
-    <img src="https://esblain.fr/images/2022/11/25/pavage44-300.png" alt="Pavage 44">
-    <img src="https://esblain.fr/images/2025/06/11/08---optic-2000-blain.png" alt="Optic 2000 Blain">
-    <img src="https://esblain.fr/images/2022/11/25/weldom300.png" alt="Weldom">
-    <img src="https://esblain.fr/images/2022/11/25/gedimat300.png" alt="Gedimat">
-    <img src="https://esblain.fr/images/2022/11/25/hyperu300.png" alt="Hyper U">
-    <img src="https://esblain.fr/images/2025/06/11/05---credit-agricole-atlantique-vendee.png" alt="Crédit Agricole Atlantique Vendée">
-    <img src="https://esblain.fr/images/2025/06/11/06---v-and-b.jpg" alt="V and B">
-    <img src="https://esblain.fr/images/2025/06/11/06---cave-les-caudalies-blain.png" alt="Cave Les Caudalies Blain">
+  <!-- 🟢 Logo du club -->
+  <header class="club-header">
+    <img src="https://esblain.fr/images/esblainlogo.jpg" alt="Logo ES Blain" class="club-logo">
+    <h1>ES BLAIN - Calendrier & Convocations</h1>
+  </header>
 
-    <!-- Seconde série (copie pour boucle continue) -->
-    <img src="https://esblain.fr/images/2022/11/25/century21-300.png" alt="Century 21">
-    <img src="https://esblain.fr/images/2022/11/25/allainz300.png" alt="Allianz">
-    <img src="https://esblain.fr/images/2022/11/25/espaceemeraude300.png" alt="Espace Émeraude">
-    <img src="https://esblain.fr/images/2022/11/25/pavage44-300.png" alt="Pavage 44">
-    <img src="https://esblain.fr/images/2025/06/11/08---optic-2000-blain.png" alt="Optic 2000 Blain">
-    <img src="https://esblain.fr/images/2022/11/25/weldom300.png" alt="Weldom">
-    <img src="https://esblain.fr/images/2022/11/25/gedimat300.png" alt="Gedimat">
-    <img src="https://esblain.fr/images/2022/11/25/hyperu300.png" alt="Hyper U">
-    <img src="https://esblain.fr/images/2025/06/11/05---credit-agricole-atlantique-vendee.png" alt="Crédit Agricole Atlantique Vendée">
-    <img src="https://esblain.fr/images/2025/06/11/06---v-and-b.jpg" alt="V and B">
-    <img src="https://esblain.fr/images/2025/06/11/06---cave-les-caudalies-blain.png" alt="Cave Les Caudalies Blain">
+  <!-- 🔰 Bande défilante des sponsors -->
+  <div class="sponsor-carousel">
+    <div class="sponsor-track">
+      <img src="https://esblain.fr/images/2022/11/25/century21-300.png" alt="Century 21">
+      <img src="https://esblain.fr/images/2022/11/25/allainz300.png" alt="Allianz">
+      <img src="https://esblain.fr/images/2022/11/25/espaceemeraude300.png" alt="Espace Émeraude">
+      <img src="https://esblain.fr/images/2022/11/25/pavage44-300.png" alt="Pavage 44">
+      <img src="https://esblain.fr/images/2025/06/11/08---optic-2000-blain.png" alt="Optic 2000 Blain">
+      <img src="https://esblain.fr/images/2022/11/25/weldom300.png" alt="Weldom">
+      <img src="https://esblain.fr/images/2022/11/25/gedimat300.png" alt="Gedimat">
+      <img src="https://esblain.fr/images/2022/11/25/hyperu300.png" alt="Hyper U">
+      <img src="https://esblain.fr/images/2025/06/11/05---credit-agricole-atlantique-vendee.png" alt="Crédit Agricole Atlantique Vendée">
+      <img src="https://esblain.fr/images/2025/06/11/06---v-and-b.jpg" alt="V and B">
+      <img src="https://esblain.fr/images/2025/06/11/06---cave-les-caudalies-blain.png" alt="Cave Les Caudalies Blain">
+
+      <!-- Copie pour boucle continue -->
+      <img src="https://esblain.fr/images/2022/11/25/century21-300.png" alt="Century 21">
+      <img src="https://esblain.fr/images/2022/11/25/allainz300.png" alt="Allianz">
+      <img src="https://esblain.fr/images/2022/11/25/espaceemeraude300.png" alt="Espace Émeraude">
+      <img src="https://esblain.fr/images/2022/11/25/pavage44-300.png" alt="Pavage 44">
+      <img src="https://esblain.fr/images/2025/06/11/08---optic-2000-blain.png" alt="Optic 2000 Blain">
+      <img src="https://esblain.fr/images/2022/11/25/weldom300.png" alt="Weldom">
+      <img src="https://esblain.fr/images/2022/11/25/gedimat300.png" alt="Gedimat">
+      <img src="https://esblain.fr/images/2022/11/25/hyperu300.png" alt="Hyper U">
+      <img src="https://esblain.fr/images/2025/06/11/05---credit-agricole-atlantique-vendee.png" alt="Crédit Agricole Atlantique Vendée">
+      <img src="https://esblain.fr/images/2025/06/11/06---v-and-b.jpg" alt="V and B">
+      <img src="https://esblain.fr/images/2025/06/11/06---cave-les-caudalies-blain.png" alt="Cave Les Caudalies Blain">
+    </div>
   </div>
-</div>
 
-
-  <h1>ES BLAIN - Calendrier & Convocations</h1>
   <label for="journeeSelect">Choisir une journée :</label>
   <select id="journeeSelect">
     <option value="journee1.json">Journée 1</option>
@@ -205,153 +245,108 @@
     <div class="tab" data-target="u16a">U16A</div>
   </div>
 
-  <div id="synthese" class="content active">
-    <div id="synthese-list"></div>
-  </div>
+  <div id="synthese" class="content active"><div id="synthese-list"></div></div>
+  <div id="u18a" class="content"><h2>U18A</h2><div id="table-u18a"></div><div id="convocation-u18a"></div></div>
+  <div id="u18b" class="content"><h2>U18B</h2><div id="table-u18b"></div><div id="convocation-u18b"></div></div>
+  <div id="u16a" class="content"><h2>U16A</h2><div id="table-u16a"></div><div id="convocation-u16a"></div></div>
 
-  <div id="u18a" class="content">
-    <h2>U18A</h2>
-    <div id="table-u18a"></div>
-    <div id="convocation-u18a"></div>
-  </div>
-
-  <div id="u18b" class="content">
-    <h2>U18B</h2>
-    <div id="table-u18b"></div>
-    <div id="convocation-u18b"></div>
-  </div>
-
-  <div id="u16a" class="content">
-    <h2>U16A</h2>
-    <div id="table-u16a"></div>
-    <div id="convocation-u16a"></div>
-  </div>
-
-<script>
-  const teamNames = { u18a: "U18A", u18b: "U18B", u16a: "U16A" };
-  //const journees = ["journee1.json", "journee2.json", "journee3.json"]; // ajoute ici si tu crées journee4.json etc.
-  const journees = ["journee1.json"]; // ajoute ici si tu crées journee4.json etc.
-
-  const select = document.getElementById('journeeSelect');
-
-  // === Initialisation du sélecteur ===
-  select.innerHTML = journees
-    .map((j, idx) => `<option value="${j}">Journée ${idx + 1}</option>`)
-    .join('');
-
-  // Choisir automatiquement la dernière journée
-  select.value = journees[journees.length - 1];
-
-  // === Gestion des onglets ===
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.target).classList.add('active');
+  <script>
+    const teamNames = { u18a: "U18A", u18b: "U18B", u16a: "U16A" };
+    const journees = ["journee1.json"];
+    const select = document.getElementById('journeeSelect');
+    select.innerHTML = journees.map((j, idx) => `<option value="${j}">Journée ${idx + 1}</option>`).join('');
+    select.value = journees[journees.length - 1];
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.target).classList.add('active');
+      });
     });
-  });
-
-  // === Chargement dynamique ===
-  select.addEventListener('change', () => chargerJournee(select.value));
-
-  async function chargerJournee(fichier) {
-    try {
-      const res = await fetch(`${fichier}?v=${Date.now()}`, { cache: "no-store" });
-      if (!res.ok) throw new Error(`Impossible de charger ${fichier}`);
-      const data = await res.json();
-
-      // Nettoyer avant rechargement
-      document.getElementById('synthese-list').innerHTML = '';
-      ['u18a', 'u18b', 'u16a'].forEach(eq => {
-        document.getElementById(`table-${eq}`).innerHTML = '';
-        document.getElementById(`convocation-${eq}`).innerHTML = '';
-      });
-
-      // === SYNTHÈSE ===
-      const synthDiv = document.getElementById('synthese-list');
-      Object.keys(data.equipes).forEach(equipe => {
-        const eq = data.equipes[equipe];
-        eq.matches.forEach((match, i) => {
-          const resp = match.responsables || {};
-          const maillots = (resp.maillots || []).join(', ') || '—';
-          const voitures = (resp.voitures || []).join(', ') || '—';
-          const bar = (resp.bar || []).join(', ') || '—';
-
-          const card = document.createElement('div');
-          card.className = 'match-card';
-          card.innerHTML = `
-            <h3>${teamNames[equipe]} vs ${match.adversaire}</h3>
-            <div class="match-info">📅 ${match.date} • 🕒 ${match.heure} • 📍 ${match.lieu}</div>
-            <div class="responsables">
-              <div>👕 Maillots : ${maillots}</div>
-              <div>🚗 Voitures : ${voitures}</div>
-              <div>🍻 Bar : ${bar}</div>
-            </div>
-            <button class="btn" data-team="${equipe}" data-index="${i}">Voir convocation</button>
-            <div class="convoc" id="convoc-${equipe}-${i}" style="display:none"></div>
-          `;
-          synthDiv.appendChild(card);
+    select.addEventListener('change', () => chargerJournee(select.value));
+    async function chargerJournee(fichier) {
+      try {
+        const res = await fetch(`${fichier}?v=${Date.now()}`, { cache: "no-store" });
+        if (!res.ok) throw new Error(`Impossible de charger ${fichier}`);
+        const data = await res.json();
+        document.getElementById('synthese-list').innerHTML = '';
+        ['u18a', 'u18b', 'u16a'].forEach(eq => {
+          document.getElementById(`table-${eq}`).innerHTML = '';
+          document.getElementById(`convocation-${eq}`).innerHTML = '';
         });
-      });
-
-      // === Boutons Voir convocation ===
-      document.querySelectorAll('.btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const team = btn.dataset.team;
-          const idx = btn.dataset.index;
-          const match = data.equipes[team].matches[idx];
-          const div = document.getElementById(`convoc-${team}-${idx}`);
-          if (div.style.display === 'none') {
-            div.innerHTML = `<ul>${match.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>`;
-            div.style.display = 'block';
-            btn.textContent = 'Masquer convocation';
-          } else {
-            div.style.display = 'none';
-            btn.textContent = 'Voir convocation';
-          }
-        });
-      });
-
-      // === PAR ÉQUIPE ===
-      Object.keys(data.equipes).forEach(equipe => {
-        const tableDiv = document.getElementById(`table-${equipe}`);
-        const convDiv = document.getElementById(`convocation-${equipe}`);
-        tableDiv.innerHTML =
-          `<table><tr><th>Date</th><th>Heure</th><th>Adversaire</th><th>Lieu</th></tr>` +
-          data.equipes[equipe].matches.map((m,i)=>
-            `<tr data-team="${equipe}" data-index="${i}">
-              <td>${m.date}</td>
-              <td>${m.heure}</td>
-              <td>${m.adversaire}</td>
-              <td>${m.lieu}</td>
-            </tr>`
-          ).join('') + '</table>';
-
-        convDiv.innerHTML = '';
-        tableDiv.querySelectorAll('tr[data-team]').forEach(row => {
-          row.addEventListener('click', () => {
-            const m = data.equipes[equipe].matches[row.dataset.index];
-            const r = m.responsables || {};
-            const maillots = (r.maillots || []).join(', ') || '—';
-            const voitures = (r.voitures || []).join(', ') || '—';
-            const bar = (r.bar || []).join(', ') || '—';
-            let html = `<div class="match-info"><strong>${teamNames[equipe]} vs ${m.adversaire}</strong> — ${m.date} ${m.heure} (${m.lieu})</div>`;
-            html += `<div class="responsables">👕 ${maillots} • 🚗 ${voitures} • 🍻 ${bar}</div>`;
-            html += `<ul>${m.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>`;
-            convDiv.innerHTML = html;
+        const synthDiv = document.getElementById('synthese-list');
+        Object.keys(data.equipes).forEach(equipe => {
+          const eq = data.equipes[equipe];
+          eq.matches.forEach((match, i) => {
+            const resp = match.responsables || {};
+            const maillots = (resp.maillots || []).join(', ') || '—';
+            const voitures = (resp.voitures || []).join(', ') || '—';
+            const bar = (resp.bar || []).join(', ') || '—';
+            const card = document.createElement('div');
+            card.className = 'match-card';
+            card.innerHTML = `
+              <h3>${teamNames[equipe]} vs ${match.adversaire}</h3>
+              <div class="match-info">📅 ${match.date} • 🕒 ${match.heure} • 📍 ${match.lieu}</div>
+              <div class="responsables">
+                <div>👕 Maillots : ${maillots}</div>
+                <div>🚗 Voitures : ${voitures}</div>
+                <div>🍻 Bar : ${bar}</div>
+              </div>
+              <button class="btn" data-team="${equipe}" data-index="${i}">Voir convocation</button>
+              <div class="convoc" id="convoc-${equipe}-${i}" style="display:none"></div>`;
+            synthDiv.appendChild(card);
           });
         });
-      });
-
-    } catch (err) {
-      console.error(err);
-      alert("Erreur lors du chargement du fichier JSON : " + err.message);
+        document.querySelectorAll('.btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const team = btn.dataset.team;
+            const idx = btn.dataset.index;
+            const match = data.equipes[team].matches[idx];
+            const div = document.getElementById(`convoc-${team}-${idx}`);
+            if (div.style.display === 'none') {
+              div.innerHTML = `<ul>${match.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>`;
+              div.style.display = 'block';
+              btn.textContent = 'Masquer convocation';
+            } else {
+              div.style.display = 'none';
+              btn.textContent = 'Voir convocation';
+            }
+          });
+        });
+        Object.keys(data.equipes).forEach(equipe => {
+          const tableDiv = document.getElementById(`table-${equipe}`);
+          const convDiv = document.getElementById(`convocation-${equipe}`);
+          tableDiv.innerHTML =
+            `<table><tr><th>Date</th><th>Heure</th><th>Adversaire</th><th>Lieu</th></tr>` +
+            data.equipes[equipe].matches.map((m,i)=>
+              `<tr data-team="${equipe}" data-index="${i}">
+                <td>${m.date}</td>
+                <td>${m.heure}</td>
+                <td>${m.adversaire}</td>
+                <td>${m.lieu}</td>
+              </tr>`).join('') + '</table>';
+          convDiv.innerHTML = '';
+          tableDiv.querySelectorAll('tr[data-team]').forEach(row => {
+            row.addEventListener('click', () => {
+              const m = data.equipes[equipe].matches[row.dataset.index];
+              const r = m.responsables || {};
+              const maillots = (r.maillots || []).join(', ') || '—';
+              const voitures = (r.voitures || []).join(', ') || '—';
+              const bar = (r.bar || []).join(', ') || '—';
+              let html = `<div class="match-info"><strong>${teamNames[equipe]} vs ${m.adversaire}</strong> — ${m.date} ${m.heure} (${m.lieu})</div>`;
+              html += `<div class="responsables">👕 ${maillots} • 🚗 ${voitures} • 🍻 ${bar}</div>`;
+              html += `<ul>${m.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>`;
+              convDiv.innerHTML = html;
+            });
+          });
+        });
+      } catch (err) {
+        console.error(err);
+        alert("Erreur lors du chargement du fichier JSON : " + err.message);
+      }
     }
-  }
-
-  // === Chargement initial : dernière journée ===
-  chargerJournee(select.value);
-</script>
+    chargerJournee(select.value);
+  </script>
 </body>
 </html>
