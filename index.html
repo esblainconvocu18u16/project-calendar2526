@@ -255,11 +255,11 @@
   const journees = ["journee1.json"];
   const select = document.getElementById('journeeSelect');
 
-  // Remplissage du sélecteur
+  // === Initialisation du sélecteur ===
   select.innerHTML = journees.map((j, idx) => `<option value="${j}">Journée ${idx + 1}</option>`).join('');
   select.value = journees[journees.length - 1];
 
-  // Gestion des onglets
+  // === Gestion des onglets ===
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -277,44 +277,27 @@
       if (!res.ok) throw new Error(`Impossible de charger ${fichier}`);
       const data = await res.json();
 
-      // Réinitialisation
+      // Nettoyage
       document.getElementById('synthese-list').innerHTML = '';
       ['u18a', 'u18b', 'u16a'].forEach(eq => {
         document.getElementById(`table-${eq}`).innerHTML = '';
         document.getElementById(`convocation-${eq}`).innerHTML = '';
       });
 
-      // === SYNTHÈSE ===
+      // === 🗓️ Synthèse ===
       const synthDiv = document.getElementById('synthese-list');
       Object.keys(data.equipes).forEach(equipe => {
-        const eq = data.equipes[equipe];
-        eq.matches.forEach((match, i) => synthDiv.appendChild(creerCarteMatch(equipe, match, i, data)));
+        data.equipes[equipe].matches.forEach((match, i) => {
+          synthDiv.appendChild(creerCarteMatch(equipe, match, i));
+        });
       });
 
-      // === TABLEAUX ÉQUIPES ===
+      // === 👥 Par équipe (sans tableau, uniquement les cartes) ===
       Object.keys(data.equipes).forEach(equipe => {
-        const tableDiv = document.getElementById(`table-${equipe}`);
         const convDiv = document.getElementById(`convocation-${equipe}`);
-
-        // Tableau
-        tableDiv.innerHTML =
-          `<table><tr><th>Date</th><th>Heure</th><th>Adversaire</th><th>Lieu</th></tr>` +
-          data.equipes[equipe].matches.map((m,i)=>
-            `<tr data-team="${equipe}" data-index="${i}">
-              <td>${m.date}</td>
-              <td>${m.heure}</td>
-              <td>${m.adversaire}</td>
-              <td>${m.lieu}</td>
-            </tr>`
-          ).join('') + '</table>';
-
-        // Lorsqu’on clique sur un match → même contenu que synthèse
-        tableDiv.querySelectorAll('tr[data-team]').forEach(row => {
-          row.addEventListener('click', () => {
-            const match = data.equipes[equipe].matches[row.dataset.index];
-            convDiv.innerHTML = '';
-            convDiv.appendChild(creerCarteMatch(equipe, match, row.dataset.index, data, true));
-          });
+        convDiv.innerHTML = '';
+        data.equipes[equipe].matches.forEach((match, i) => {
+          convDiv.appendChild(creerCarteMatch(equipe, match, i));
         });
       });
 
@@ -324,8 +307,8 @@
     }
   }
 
-  // === Fonction utilitaire : création d'une carte de match ===
-  function creerCarteMatch(equipe, match, index, data, expanded=false) {
+  // === Fonction de création d'une carte de match ===
+  function creerCarteMatch(equipe, match, index) {
     const resp = match.responsables || {};
     const maillots = (resp.maillots || []).join(', ') || '—';
     const voitures = (resp.voitures || []).join(', ') || '—';
@@ -342,14 +325,11 @@
         <div>🚗 Voitures : ${voitures}</div>
         <div>🍻 Bar : ${bar}</div>
       </div>
-      <button class="btn" data-team="${equipe}" data-index="${index}">
-        ${expanded ? 'Masquer convocation' : 'Voir convocation'}
-      </button>
-      <div class="convoc" id="convoc-${equipe}-${index}" style="display:${expanded ? 'block' : 'none'}">
-        ${expanded ? `<ul>${match.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>` : ''}
-      </div>
+      <button class="btn" data-team="${equipe}" data-index="${index}">Voir convocation</button>
+      <div class="convoc" id="convoc-${equipe}-${index}" style="display:none"></div>
     `;
 
+    // Gestion du bouton
     const btn = card.querySelector('.btn');
     const div = card.querySelector('.convoc');
     btn.addEventListener('click', () => {
@@ -366,7 +346,7 @@
     return card;
   }
 
-  // Charger la dernière journée par défaut
+  // === Chargement initial ===
   chargerJournee(select.value);
 </script>
 </body>
