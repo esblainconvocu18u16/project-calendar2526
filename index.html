@@ -142,42 +142,78 @@
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
-    /* === SPONSORS === */
-    .sponsor-carousel {
-      width: 100%;
-      overflow: hidden;
-      background: var(--card);
-      padding: 8px 0;
-      margin-bottom: 16px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    .sponsor-track {
-      display: flex;
-      gap: 20px;
-      width: max-content;
-      animation: scroll 40s linear infinite;
-      align-items: center;
-    }
-    .sponsor-track img {
-      height: 90px;
-      width: auto;
-      flex-shrink: 0;
-      object-fit: contain;
-      filter: brightness(0.95);
-      transition: transform 0.3s;
-    }
-    .sponsor-track img:hover { transform: scale(1.1); }
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
+    /* === SPONSORS (bandeau fluide sans saut) === */
+.sponsor-carousel {
+  width: 100%;
+  overflow: hidden;
+  background: var(--card);
+  padding: 10px 0;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  position: relative;
+}
 
-    @media (max-width: 600px) {
-      .sponsor-track img { height: 65px; }
-      .club-logo { width: 90px; }
-      .club-header h1 { font-size: 1.1rem; }
-    }
+.sponsor-track {
+  display: flex;
+  width: max-content;
+  gap: 30px;
+  align-items: center;
+  animation: scroll 60s linear infinite;
+}
+
+.sponsor-track:hover {
+  animation-play-state: paused; /* met en pause au survol */
+}
+
+.sponsor-track img {
+  height: 80px;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+  filter: brightness(0.95);
+  transition: transform 0.3s ease;
+}
+
+.sponsor-track img:hover {
+  transform: scale(1.1);
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ✅ Astuce responsive : double flux fluide */
+.sponsor-carousel::before,
+.sponsor-carousel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  pointer-events: none;
+  z-index: 2;
+}
+.sponsor-carousel::before {
+  left: 0;
+  background: linear-gradient(to right, var(--card), transparent);
+}
+.sponsor-carousel::after {
+  right: 0;
+  background: linear-gradient(to left, var(--card), transparent);
+}
+
+@media (max-width: 600px) {
+  .sponsor-track img {
+    height: 60px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -188,21 +224,35 @@
   </header>
 
   <!-- Bandeau sponsors -->
-  <div class="sponsor-carousel">
-    <div class="sponsor-track">
-      <img src="https://esblain.fr/images/2022/11/25/century21-300.png" alt="Century 21">
-      <img src="https://esblain.fr/images/2022/11/25/allainz300.png" alt="Allianz">
-      <img src="https://esblain.fr/images/2022/11/25/espaceemeraude300.png" alt="Espace Émeraude">
-      <img src="https://esblain.fr/images/2022/11/25/pavage44-300.png" alt="Pavage 44">
-      <img src="https://esblain.fr/images/2025/06/11/08---optic-2000-blain.png" alt="Optic 2000 Blain">
-      <img src="https://esblain.fr/images/2022/11/25/weldom300.png" alt="Weldom">
-      <img src="https://esblain.fr/images/2022/11/25/gedimat300.png" alt="Gedimat">
-      <img src="https://esblain.fr/images/2022/11/25/hyperu300.png" alt="Hyper U">
-      <img src="https://esblain.fr/images/2025/06/11/05---credit-agricole-atlantique-vendee.png" alt="Crédit Agricole">
-      <img src="https://esblain.fr/images/2025/06/11/06---v-and-b.jpg" alt="V and B">
-      <img src="https://esblain.fr/images/2025/06/11/06---cave-les-caudalies-blain.png" alt="Cave Les Caudalies">
-    </div>
+<div class="sponsor-carousel">
+  <div class="sponsor-track">
+    <img src="https://esblain.fr/images/2022/11/25/century21-300.png" alt="Century 21">
+    <img src="https://esblain.fr/images/2022/11/25/allainz300.png" alt="Allianz">
+    <img src="https://esblain.fr/images/2022/11/25/espaceemeraude300.png" alt="Espace Émeraude">
+    <img src="https://esblain.fr/images/2022/11/25/pavage44-300.png" alt="Pavage 44">
+    <img src="https://esblain.fr/images/2025/06/11/08---optic-2000-blain.png" alt="Optic 2000 Blain">
+    <img src="https://esblain.fr/images/2022/11/25/weldom300.png" alt="Weldom">
+    <img src="https://esblain.fr/images/2022/11/25/gedimat300.png" alt="Gedimat">
+    <img src="https://esblain.fr/images/2022/11/25/hyperu300.png" alt="Hyper U">
+    <img src="https://esblain.fr/images/2025/06/11/05---credit-agricole-atlantique-vendee.png" alt="Crédit Agricole">
+    <img src="https://esblain.fr/images/2025/06/11/06---v-and-b.jpg" alt="V and B">
+    <img src="https://esblain.fr/images/2025/06/11/06---cave-les-caudalies-blain.png" alt="Cave Les Caudalies Blain">
+
+    <!-- Duplication automatique pour le flux continu -->
+    <img src="https://esblain.fr/images/2022/11/25/century21-300.png" alt="Century 21">
+    <img src="https://esblain.fr/images/2022/11/25/allainz300.png" alt="Allianz">
+    <img src="https://esblain.fr/images/2022/11/25/espaceemeraude300.png" alt="Espace Émeraude">
+    <img src="https://esblain.fr/images/2022/11/25/pavage44-300.png" alt="Pavage 44">
+    <img src="https://esblain.fr/images/2025/06/11/08---optic-2000-blain.png" alt="Optic 2000 Blain">
+    <img src="https://esblain.fr/images/2022/11/25/weldom300.png" alt="Weldom">
+    <img src="https://esblain.fr/images/2022/11/25/gedimat300.png" alt="Gedimat">
+    <img src="https://esblain.fr/images/2022/11/25/hyperu300.png" alt="Hyper U">
+    <img src="https://esblain.fr/images/2025/06/11/05---credit-agricole-atlantique-vendee.png" alt="Crédit Agricole">
+    <img src="https://esblain.fr/images/2025/06/11/06---v-and-b.jpg" alt="V and B">
+    <img src="https://esblain.fr/images/2025/06/11/06---cave-les-caudalies-blain.png" alt="Cave Les Caudalies Blain">
   </div>
+</div>
+
 
   <label for="journeeSelect">Choisir une journée :</label>
   <select id="journeeSelect">
