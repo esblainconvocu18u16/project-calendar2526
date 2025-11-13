@@ -270,80 +270,106 @@
   <div id="u16a" class="content"><h2>U16A</h2><div id="convocation-u16a"></div></div>
 
   <script>
-    const teamNames = { u18a: "U18A", u18b: "U18B", u16a: "U16A" };
-    const journees = ["journee1.json"];
-    const select = document.getElementById('journeeSelect');
+  const select = document.getElementById("journeeSelect");
 
-    select.innerHTML = journees.map((j, idx) => `<option value="${j}">Journée ${idx + 1}</option>`).join('');
-    select.value = journees[journees.length - 1];
+  // Fonction principale
+  async function initialiserCalendrier() {
+    try {
+      // On récupère la liste des journées depuis index.json
+      const res = await fetch("index.json", { cache: "no-store" });
+      const data = await res.json();
+      const journees = data.journees;
 
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.target).classList.add('active');
+      // Tri automatique par numéro (journee3 > journee1)
+      const journeesTriees = journees.sort((a, b) => {
+        const numA = parseInt(a.match(/\d+/)[0]);
+        const numB = parseInt(b.match(/\d+/)[0]);
+        return numB - numA; // du plus récent au plus ancien
       });
+
+      // Création du menu déroulant
+      select.innerHTML = journeesTriees
+        .map((j, idx) => `<option value="${j}">Journée ${journeesTriees.length - idx}</option>`)
+        .join("");
+
+      // Sélection de la journée la plus récente
+      select.value = journeesTriees[0];
+      chargerJournee(select.value);
+
+      // Quand on change de journée
+      select.addEventListener("change", () => chargerJournee(select.value));
+
+    } catch (err) {
+      console.error("Erreur lors du chargement de la liste des journées :", err);
+      alert("Impossible de charger la liste des journées.");
+    }
+  }
+
+  // Charge une journée donnée
+  async function chargerJournee(fichier) {
+    try {
+      const res = await fetch(`${fichier}?v=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Impossible de charger ${fichier}`);
+      const data = await res.json();
+
+      ['u18a', 'u18b', 'u16a'].forEach(eq => {
+        document.getElementById(`convocation-${eq}`).innerHTML = '';
+      });
+
+      Object.keys(data.equipes).forEach(equipe => {
+        const convDiv = document.getElementById(`convocation-${equipe}`);
+        data.equipes[equipe].matches.forEach((match, i) => {
+          convDiv.appendChild(creerCarteMatch(equipe, match, i));
+        });
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors du chargement du fichier JSON : " + err.message);
+    }
+  }
+
+  // Fonction d’affichage d’une carte de match
+  function creerCarteMatch(equipe, match, index) {
+    const teamNames = { u18a: "U18A", u18b: "U18B", u16a: "U16A" };
+    const resp = match.responsables || {};
+    const maillots = (resp.maillots || []).join(', ') || '—';
+    const voitures = (resp.voitures || []).join(', ') || '—';
+    const bar = (resp.bar || []).join(', ') || '—';
+
+    const card = document.createElement("div");
+    card.className = "match-card";
+    card.innerHTML = `
+      <h3>${teamNames[equipe]} vs ${match.adversaire}</h3>
+      <div class="match-info">📅 ${match.date} • 🕒 ${match.heure} • 📍 ${match.lieu}</div>
+      ${match.rendezvous ? `<div class="match-info">⏰ RDV : ${match.rendezvous}</div>` : ""}
+      <div class="responsables">
+        <div>👕 Maillots : ${maillots}</div>
+        <div>🚗 Voitures : ${voitures}</div>
+        <div>🍻 Bar : ${bar}</div>
+      </div>
+      <button class="btn">Voir convocation</button>
+      <div class="convoc" style="display:none"></div>
+    `;
+
+    const btn = card.querySelector(".btn");
+    const div = card.querySelector(".convoc");
+    btn.addEventListener("click", () => {
+      if (div.style.display === "none") {
+        div.innerHTML = `<ul>${match.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>`;
+        div.style.display = "block";
+        btn.textContent = "Masquer convocation";
+      } else {
+        div.style.display = "none";
+        btn.textContent = "Voir convocation";
+      }
     });
 
-    select.addEventListener('change', () => chargerJournee(select.value));
+    return card;
+  }
 
-    async function chargerJournee(fichier) {
-      try {
-        const res = await fetch(`${fichier}?v=${Date.now()}`, { cache: "no-store" });
-        if (!res.ok) throw new Error(`Impossible de charger ${fichier}`);
-        const data = await res.json();
-        ['u18a', 'u18b', 'u16a'].forEach(eq => {
-          document.getElementById(`convocation-${eq}`).innerHTML = '';
-        });
-        Object.keys(data.equipes).forEach(equipe => {
-          const convDiv = document.getElementById(`convocation-${equipe}`);
-          data.equipes[equipe].matches.forEach((match, i) => {
-            convDiv.appendChild(creerCarteMatch(equipe, match, i));
-          });
-        });
-      } catch (err) {
-        console.error(err);
-        alert("Erreur lors du chargement du fichier JSON : " + err.message);
-      }
-    }
+  // Démarrage
+  initialiserCalendrier();
+</script>
 
-    function creerCarteMatch(equipe, match, index) {
-      const resp = match.responsables || {};
-      const maillots = (resp.maillots || []).join(', ') || '—';
-      const voitures = (resp.voitures || []).join(', ') || '—';
-      const bar = (resp.bar || []).join(', ') || '—';
-
-      const card = document.createElement('div');
-      card.className = 'match-card';
-      card.innerHTML = `
-        <h3>${teamNames[equipe]} vs ${match.adversaire}</h3>
-        <div class="match-info">📅 ${match.date} • 🕒 ${match.heure} • 📍 ${match.lieu}</div>
-        ${match.rendezvous ? `<div class="match-info">⏰ RDV : ${match.rendezvous}</div>` : ""}
-        <div class="responsables">
-          <div>👕 Maillots : ${maillots}</div>
-          <div>🚗 Voitures : ${voitures}</div>
-          <div>🍻 Bar : ${bar}</div>
-        </div>
-        <button class="btn" data-team="${equipe}" data-index="${index}">Voir convocation</button>
-        <div class="convoc" id="convoc-${equipe}-${index}" style="display:none"></div>
-      `;
-      const btn = card.querySelector('.btn');
-      const div = card.querySelector('.convoc');
-      btn.addEventListener('click', () => {
-        if (div.style.display === 'none') {
-          div.innerHTML = `<ul>${match.convocation.map(j => `<li>${j.nom}</li>`).join('')}</ul>`;
-          div.style.display = 'block';
-          btn.textContent = 'Masquer convocation';
-        } else {
-          div.style.display = 'none';
-          btn.textContent = 'Voir convocation';
-        }
-      });
-      return card;
-    }
-
-    chargerJournee(select.value);
-  </script>
 </body>
 </html>
