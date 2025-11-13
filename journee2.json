@@ -45,7 +45,7 @@
           "responsables": {
             "maillots": ["Aaron"],
             "voitures": [],
-            "bar": ["Lucas-B", ""]
+            "bar": ["Lucas-B", "Cécile"]
           },
           "convocation": [
             { "nom": "Aaron K." },
@@ -54,7 +54,7 @@
             { "nom": "Paul B." },
             { "nom": "Théo M." },
             { "nom": "Alan" },
-            { "nom": "Eythan" },
+            { "nom": "Ethan" },
             { "nom": "Lucas B." },
             { "nom": "Thomas N." },
             { "nom": "Hugo D." },
